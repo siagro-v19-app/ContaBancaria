@@ -1,0 +1,77 @@
+<mvc:View
+	xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	controllerName="br.com.idxtecContaBancaria.controller.GravarContaBancaria"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:f="sap.ui.layout.form">
+	<App>
+		<pages>
+			<Page showNavButton="true"
+				navButtonPress="onVoltar">
+				<content>
+					<VBox class="sapUiSmallMargin">	
+						<f:SimpleForm id="SimpleFormChange480_Trial"
+						editable="true"
+						layout="ResponsiveGridLayout"
+						title="{view>/titulo}"
+						labelSpanXL="4"
+						labelSpanL="4"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="3"
+						columnsL="2"
+						columnsM="2"
+						singleContainerFullSize="false">
+							<f:content>
+								<Label text="Banco" labelFor="banco"/>
+								<ComboBox selectedKey="{model>/Banco}"
+									items="{path: '/Bancos'}"
+									required="true"
+									id="banco"> 
+									<core:ListItem key="{Codigo}" text="{Nome}"/>
+								</ComboBox>
+						
+								<Label text="Agência" labelFor="agencia"/>
+								<Input id="agencia" value="{model>/Agencia}" required="true"/>
+								
+								<Label text="Conta corrente" labelFor="numeroconta"/>
+								<Input id="numeroconta" value="{model>/NumeroConta}" required="true"/>
+								
+								<Label text="Titular" labelFor="titular"/>
+								<Input id="titular" value="{model>/Titular}" required="true"/>
+								
+								<Label text="Conta contábil" labelFor="contacontabil"/>
+								<Input selectedKey="{model>/ContaContabil}"
+									textFormatMode="KeyValue"
+									showSuggestion="true"
+									showValueHelp="true"
+									valueHelpRequest="handleSearchConta"
+									suggestionItems="{path: '/PlanoContas'}"
+									id="contacontabil">
+									<suggestionItems>
+										<core:ListItem key="{Codigo}" text="{Descricao}"/>
+									</suggestionItems>
+								</Input>
+								
+								<Label text="Descrição" labelFor="descricao"/>
+								<Input id="descricao" value="{model>/Descricao}" required="true"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button id="salvar" text="Salvar" press="onSalvar" class="sapUiSmallMarginEnd"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
