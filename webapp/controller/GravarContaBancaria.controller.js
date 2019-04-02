@@ -75,7 +75,7 @@ sap.ui.define([
 		
 		onSalvar: function(){
 			if (this._checarCampos(this.getView()) === true) {
-				MessageBox.information("Preencha todos os campos obrigatórios!");
+				MessageBox.warning("Preencha todos os campos obrigatórios!");
 				return;
 			}
 			

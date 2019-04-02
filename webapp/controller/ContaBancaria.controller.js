@@ -16,9 +16,10 @@ sap.ui.define([
 		onRefresh: function(e){
 			var oModel = this.getOwnerComponent().getModel();
 			oModel.refresh(true);
+			this.getView().byId("tableConta").clearSelection();
 		},
 		
-		onIncluir: function(){
+		onIncluirConta: function(){
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			var oTable = this.byId("tableConta"); 
 			
@@ -29,13 +30,13 @@ sap.ui.define([
 			oTable.clearSelection();
 		},
 		
-		onEditar: function(){
+		onEditarConta: function(){
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			var oTable = this.byId("tableConta");
 			var nIndex = oTable.getSelectedIndex();
 			
 			if (nIndex === -1){
-				MessageBox.information("Selecione uma conta da tabela.");
+				MessageBox.warning("Selecione uma conta na tabela.");
 				return;
 			}
 			
@@ -47,13 +48,13 @@ sap.ui.define([
 			oTable.clearSelection();
 		},
 		
-		onRemover: function(e){
+		onRemoverConta: function(e){
 			var that = this;
 			var oTable = this.byId("tableConta");
 			var nIndex = oTable.getSelectedIndex();
 			
 			if (nIndex === -1){
-				MessageBox.information("Selecione uma conta na tabela.");
+				MessageBox.warning("Selecione uma conta na tabela.");
 				return;
 			}
 			

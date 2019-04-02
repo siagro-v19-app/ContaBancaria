@@ -7,14 +7,13 @@
 	xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page showNavButton="true"
-				navButtonPress="onVoltar">
+			<Page showHeader="false">
 				<content>
-					<VBox class="sapUiSmallMargin">	
-						<f:SimpleForm id="SimpleFormChange480_Trial"
+					<VBox class="sapUiSmallMargin">
+						<Panel headerText="Conta Bancária">
+							<f:SimpleForm id="formConta"
 						editable="true"
 						layout="ResponsiveGridLayout"
-						title="{view>/titulo}"
 						labelSpanXL="4"
 						labelSpanL="4"
 						labelSpanM="4"
@@ -29,6 +28,7 @@
 						columnsM="2"
 						singleContainerFullSize="false">
 							<f:content>
+								<core:Title text="{view>/titulo}"/> 
 								<Label text="Banco" labelFor="banco"/>
 								<ComboBox selectedKey="{model>/Banco}"
 									items="{path: '/Bancos'}"
@@ -63,12 +63,14 @@
 								<Input id="descricao" value="{model>/Descricao}" required="true"/>
 							</f:content>
 						</f:SimpleForm>
+						</Panel>
 					</VBox>
 				</content>
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button id="salvar" text="Salvar" press="onSalvar" class="sapUiSmallMarginEnd"/>
+						<Button icon="sap-icon://save" id="salvar" text="Salvar" press="onSalvar"/>
+						<Button icon="sap-icon://reset" id="voltar" text="Cancelar" press="onVoltar"/>
 					</Toolbar>
 				</footer>
 			</Page>
