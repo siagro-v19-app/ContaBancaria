@@ -3,8 +3,10 @@ sap.ui.define([
 	"sap/ui/core/routing/History",
 	"sap/m/MessageBox",
 	"sap/ui/model/json/JSONModel",
-	"idxtec/lib/fragment/ContaContabilHelpDialog"
-], function(Controller, History, MessageBox, JSONModel, ContaContabilHelpDialog) {
+	"br/com/idxtecContaBancaria/helpers/BancoHelpDialog",
+	"br/com/idxtecContaBancaria/helpers/ContaContabilHelpDialog",
+	"br/com/idxtecContaBancaria/services/Session"
+], function(Controller, History, MessageBox, JSONModel, BancoHelpDialog, ContaContabilHelpDialog, Session) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecContaBancaria.controller.GravarContaBancaria", {
@@ -21,9 +23,22 @@ sap.ui.define([
 			this.getOwnerComponent().setModel(oJSONModel,"model");
 		},
 		
+		bancoReceived: function() {
+			this.getView().byId("banco").setSelectedKey(this.getModel("model").getProperty("/Banco"));
+		},
+		
+		contaReceived: function() {
+			this.getView().byId("contacontabil").setSelectedKey(this.getModel("model").getProperty("/ContaContabil"));
+		},
+		
+		handleSearchBanco: function(oEvent){
+			var sInputId = oEvent.getParameter("id");
+			BancoHelpDialog.handleValueHelp(this.getView(), sInputId, this);
+		},
+		
 		handleSearchConta: function(oEvent){
-			var oHelp = new ContaContabilHelpDialog(this.getView(), "contacontabil");
-			oHelp.getDialog().open();
+			var sInputId = oEvent.getParameter("id");
+			ContaContabilHelpDialog.handleValueHelp(this.getView(), sInputId, this);
 		},
 		
 		_routerMatch: function(){
@@ -34,6 +49,9 @@ sap.ui.define([
 			
 			this._operacao = oParam.operacao;
 			this._sPath = oParam.sPath;
+			
+			this.getView().byId("banco").setValue(null);
+			this.getView().byId("contacontabil").setValue(null);
 			
 			if (this._operacao === "incluir"){
 				
@@ -48,13 +66,14 @@ sap.ui.define([
 					"NumeroConta": "",
 					"Titular": "",
 					"ContaContabil": "",
-					"Descricao": ""
+					"Descricao": "",
+					"Empresa" : Session.get("EMPRESA_ID"),
+					"Usuario": Session.get("USUARIO_ID"),
+					"EmpresaDetails": { __metadata: { uri: "/Empresas(" + Session.get("EMPRESA_ID") + ")"}},
+					"UsuarioDetails": { __metadata: { uri: "/Usuarios(" + Session.get("USUARIO_ID") + ")"}}
 				};
 				
 				oJSONModel.setData(oNovaConta);
-				
-				this.getView().byId("banco").setSelectedKey("");
-				this.getView().byId("contacontabil").setSelectedKey("");
 				
 			} else if (this._operacao === "editar"){
 				
@@ -65,9 +84,6 @@ sap.ui.define([
 				oModel.read(oParam.sPath,{
 					success: function(oData) {
 						oJSONModel.setData(oData);
-					},
-					error: function(oError) {
-						MessageBox.error(oError.responseText);
 					}
 				});
 			}
@@ -128,9 +144,6 @@ sap.ui.define([
 							that._goBack();
 						}
 					});
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
@@ -146,17 +159,12 @@ sap.ui.define([
 							that._goBack();
 						}
 					});
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
 				}
 			});
 		},
 		
 		_checarCampos: function(oView){
-			if(oView.byId("banco").getSelectedItem() === null || oView.byId("agencia").getValue() === ""
-			|| oView.byId("numeroconta").getValue() === "" || oView.byId("titular").getValue() === ""
-			|| oView.byId("contacontabil").getSelectedItem() === null || oView.byId("descricao").getValue() === ""){
+			if(oView.byId("descricao").getValue() === ""){
 				return true;
 			} else{
 				return false; 
@@ -165,6 +173,10 @@ sap.ui.define([
 		
 		onVoltar: function(){
 			this._goBack();
+		},
+		
+		getModel: function(sModel) {
+			return this.getOwnerComponent().getModel(sModel);
 		}
 	});
 

@@ -19,7 +19,7 @@ sap.ui.define([
 			this.getView().byId("tableConta").clearSelection();
 		},
 		
-		onIncluirConta: function(){
+		onIncluir: function(){
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			var oTable = this.byId("tableConta"); 
 			
@@ -30,7 +30,7 @@ sap.ui.define([
 			oTable.clearSelection();
 		},
 		
-		onEditarConta: function(){
+		onEditar: function(){
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			var oTable = this.byId("tableConta");
 			var nIndex = oTable.getSelectedIndex();
@@ -48,7 +48,7 @@ sap.ui.define([
 			oTable.clearSelection();
 		},
 		
-		onRemoverConta: function(e){
+		onRemover   : function(e){
 			var that = this;
 			var oTable = this.byId("tableConta");
 			var nIndex = oTable.getSelectedIndex();
@@ -76,9 +76,6 @@ sap.ui.define([
 				success: function(){
 					oModel.refresh(true);
 					oTable.clearSelection();
-				},
-				error: function(oError){
-					MessageBox.error(oError.responseText);
 				}
 			});
 		}

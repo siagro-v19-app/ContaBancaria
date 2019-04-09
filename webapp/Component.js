@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/UIComponent",
 	"sap/ui/Device",
-	"br/com/idxtecContaBancaria/model/models"
-], function(UIComponent, Device, models) {
+	"br/com/idxtecContaBancaria/model/models",
+	"br/com/idxtecContaBancaria/services/ErrorHandler"
+], function(UIComponent, Device, models, ErrorHandler) {
 	"use strict";
 
 	return UIComponent.extend("br.com.idxtecContaBancaria.Component", {
@@ -17,7 +18,8 @@ sap.ui.define([
 		 * @override
 		 */
 		init: function() {
-			// call the base component's init function
+			
+			this._oErrorHandler = new ErrorHandler(this);
 			UIComponent.prototype.init.apply(this, arguments);
 
 			// set the device model
@@ -27,6 +29,12 @@ sap.ui.define([
 			this.getRouter().initialize();
 			
 			jQuery.sap.registerModulePath("idxtec.lib.fragment", "/resources/idxtec/lib/fragment");
+		},
+		
+		destroy: function(){
+			this._oErrorHandler.destroy();
+			
+			UIComponent.prototype.destroy.apply(this, arguments);
 		},
 		
 		getContentDensityClass: function(){

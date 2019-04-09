@@ -12,57 +12,72 @@
 					<VBox class="sapUiSmallMargin">
 						<Panel headerText="Conta Bancária">
 							<f:SimpleForm id="formConta"
-						editable="true"
-						layout="ResponsiveGridLayout"
-						labelSpanXL="4"
-						labelSpanL="4"
-						labelSpanM="4"
-						labelSpanS="12"
-						adjustLabelSpan="false"
-						emptySpanXL="0"
-						emptySpanL="0"
-						emptySpanM="0"
-						emptySpanS="0"
-						columnsXL="3"
-						columnsL="2"
-						columnsM="2"
-						singleContainerFullSize="false">
-							<f:content>
-								<core:Title text="{view>/titulo}"/> 
-								<Label text="Banco" labelFor="banco"/>
-								<ComboBox selectedKey="{model>/Banco}"
-									items="{path: '/Bancos'}"
-									required="true"
-									id="banco"> 
-									<core:ListItem key="{Codigo}" text="{Nome}"/>
-								</ComboBox>
-						
-								<Label text="Agência" labelFor="agencia"/>
-								<Input id="agencia" value="{model>/Agencia}" required="true"/>
-								
-								<Label text="Conta corrente" labelFor="numeroconta"/>
-								<Input id="numeroconta" value="{model>/NumeroConta}" required="true"/>
-								
-								<Label text="Titular" labelFor="titular"/>
-								<Input id="titular" value="{model>/Titular}" required="true"/>
-								
-								<Label text="Conta contábil" labelFor="contacontabil"/>
-								<Input selectedKey="{model>/ContaContabil}"
-									textFormatMode="KeyValue"
-									showSuggestion="true"
-									showValueHelp="true"
-									valueHelpRequest="handleSearchConta"
-									suggestionItems="{path: '/PlanoContas'}"
-									id="contacontabil">
-									<suggestionItems>
-										<core:ListItem key="{Codigo}" text="{Descricao}"/>
-									</suggestionItems>
-								</Input>
-								
-								<Label text="Descrição" labelFor="descricao"/>
-								<Input id="descricao" value="{model>/Descricao}" required="true"/>
-							</f:content>
-						</f:SimpleForm>
+								editable="true"
+								layout="ResponsiveGridLayout"
+								labelSpanXL="4"
+								labelSpanL="4"
+								labelSpanM="4"
+								labelSpanS="12"
+								adjustLabelSpan="false"
+								emptySpanXL="0"
+								emptySpanL="0"
+								emptySpanM="0"
+								emptySpanS="0"
+								columnsXL="3"
+								columnsL="2"
+								columnsM="2"
+								singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{view>/titulo}"/>
+									<Label text="Descrição" labelFor="descricao"/>
+									<Input id="descricao" value="{model>/Descricao}" required="true"/>
+									
+									<Label text="Banco" labelFor="banco"/>
+									<Input selectedKey="{model>/Banco}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchBanco"
+										suggestionItems="{
+											path: '/Bancos',
+											events: {
+												dataReceived: '.bancoReceived'
+											}
+										}"
+										id="banco">
+										<suggestionItems>
+											<core:ListItem key="{Codigo}" text="{Nome}"/>
+										</suggestionItems>
+									</Input>
+							
+									<Label text="Agência" labelFor="agencia"/>
+									<Input id="agencia" value="{model>/Agencia}"/>
+									
+									<Label text="Conta corrente" labelFor="numeroconta"/>
+									<Input id="numeroconta" value="{model>/NumeroConta}"/>
+									
+									<Label text="Titular" labelFor="titular"/>
+									<Input id="titular" value="{model>/Titular}"/>
+									
+									<Label text="Conta contábil" labelFor="contacontabil"/>
+									<Input selectedKey="{model>/ContaContabil}"
+										textFormatMode="KeyValue"
+										showSuggestion="true"
+										showValueHelp="true"
+										valueHelpRequest="handleSearchConta"
+										suggestionItems="{
+											path: '/PlanoContas',
+											events: {
+												dataReceived: '.contaReceived'
+											}
+										}"
+										id="contacontabil">
+										<suggestionItems>
+											<core:ListItem key="{Codigo}" text="{Descricao}"/>
+										</suggestionItems>
+									</Input>
+								</f:content>
+							</f:SimpleForm>
 						</Panel>
 					</VBox>
 				</content>

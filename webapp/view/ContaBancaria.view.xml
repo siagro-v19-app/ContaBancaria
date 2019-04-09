@@ -33,18 +33,6 @@
 											<Text text="{Descricao}"/>
 										</t:template>
 									</t:Column>
-									<t:Column filterProperty="Agencia" sortProperty="Agencia">
-										<Label text="Agencia"/>
-										<t:template>
-											<Text text="{Agencia}"/>
-										</t:template>
-									</t:Column>
-									<t:Column filterProperty="NumeroConta" sortProperty="NumeroConta">
-										<Label text="NumeroConta"/>
-										<t:template>
-											<Text text="{NumeroConta}"/>
-										</t:template>
-									</t:Column>
 								</t:columns>
 								<t:footer>
 									<Toolbar>
@@ -61,9 +49,9 @@
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button icon="sap-icon://add" id="incluir" text="Incluir novo" press="onIncluirConta"/>
-						<Button icon="sap-icon://edit" id="editar" text="Editar" press="onEditarConta"/>
-						<Button icon="sap-icon://delete" id="remover" text="Remover" press="onRemoverConta"/>
+						<Button icon="sap-icon://add" id="incluir" text="Incluir novo" press="onIncluir"/>
+						<Button icon="sap-icon://edit" id="editar" text="Editar" press="onEditar"/>
+						<Button icon="sap-icon://delete" id="remover" text="Remover" press="onRemover"/>
 					</Toolbar> 
 				</footer>
 			</Page>
